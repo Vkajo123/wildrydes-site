@@ -17,7 +17,7 @@ let map;
         window.location.href = '/signin.html';
     });
 
-    var firstUnicornPosition; // Variable to store the position of the first unicorn
+     var firstUnicornPosition;
 
     //  requestUnicorn
     //      make the POST request to the server
@@ -56,6 +56,8 @@ let map;
         displayUpdate(unicorn.Name + ', your ' + unicorn.Color + ' unicorn, is on ' + pronoun + ' way.', unicorn.Color);
 
         console.log(pickupLocation);
+        //  get the local weather, find nearby restaurants, movies
+        // getWeather(pickupLocation, unicorn)
 
         var secondUnicornPosition = [pickupLocation.latitude, pickupLocation.longitude]; // Position of the second unicorn
         drawLineBetweenUnicorns(firstUnicornPosition, secondUnicornPosition);
@@ -69,10 +71,8 @@ let map;
         });
     }
 
-    // Function to draw a line between two unicorn markers
     function drawLineBetweenUnicorns(firstPosition, secondPosition) {
         var line = L.polyline([firstPosition, secondPosition], {color: 'blue'}).addTo(map);
-    }
 
     // Register click handler for #request button
     $(function onDocReady() {
@@ -116,8 +116,7 @@ let map;
                 shadowAnchor: [22, 24]
             });
             WildRydes.unicorn = L.marker([loc.coords.latitude, loc.coords.longitude], {icon: myIcon}).addTo(map);
-            firstUnicornPosition = [loc.coords.latitude, loc.coords.longitude]; // Store position of first unicorn
-
+            firstUnicornPosition = [loc.coords.latitude, loc.coords.longitude];
             // WildRydes.marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
             // var popup = L.popup();
@@ -176,10 +175,16 @@ let map;
         WildRydes.map.animate(origin, dest, callback);
     }
 
-    //  these functions below here are my utility functions
-    //      to present messages to users
-    //      and to particularly add some 'sizzle' to the application
 
-    //  displayUpdate
-    //      nice utility method to show message to user
-    function display
+}(jQuery));
+
+//  these functions below here are my utility functions
+//      to present messages to users
+//      and to particularly add some 'sizzle' to the application
+
+//  displayUpdate
+//      nice utility method to show message to user
+function displayUpdate(text, color='green') {
+    $('#updates').prepend($(`<li style="background-color:${color}">${text}</li>`));
+}
+
