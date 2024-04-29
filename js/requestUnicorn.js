@@ -58,7 +58,9 @@ exports.handler = (event, context, callback) => {
 
 	const pickupLocation = requestBody.PickupLocation;
 
-	const unicorn = findUnicorn(pickupLocation);
+	const unicornColor = requestBody.UnicornColor;
+
+    	const unicorn = findUnicorn(pickupLocation, unicornColor);
 
 	recordRide(rideId, username, unicorn).then(() => {
 		// You can use the callback function to provide a return value from your Node.js
@@ -92,10 +94,16 @@ exports.handler = (event, context, callback) => {
 // This is where you would implement logic to find the optimal unicorn for
 // this ride (possibly invoking another Lambda function as a microservice.)
 // For simplicity, we'll just pick a unicorn at random.
-function findUnicorn(pickupLocation) {
-	console.log('Finding unicorn for ', pickupLocation.Latitude, ', ', pickupLocation.Longitude);
-	return fleet[Math.floor(Math.random() * fleet.length)];
+function findUnicorn(pickupLocation, unicornColor) {
+    console.log('Finding unicorn for ', pickupLocation.Latitude, ', ', pickupLocation.Longitude, ' with color ', unicornColor);
+    const availableUnicorns = fleet.filter(unicorn => unicorn.Color === unicornColor);
+    if (availableUnicorns.length === 0) {
+        console.log('No unicorn of color ', unicornColor, ' available. Picking random unicorn.');
+        return fleet[Math.floor(Math.random() * fleet.length)]; 
+    }
+    return availableUnicorns[Math.floor(Math.random() * availableUnicorns.length)]; 
 }
+
 
 function recordRide(rideId, username, unicorn) {
 	return ddb.put({
