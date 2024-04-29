@@ -15,6 +15,12 @@ WildRydes.map = WildRydes.map || {};
         let latInc = (dest.latitude - latlng.lat) / 100;
         let lngInc = (dest.longitude - latlng.lng) / 100;
 
+        if (WildRydes.polyline) {
+            WildRydes.polyline.remove();
+        }
+
+        const coordinates = [latlng];
+
         clearInterval(id);
         id = setInterval(frame, 5);
         function frame() {
