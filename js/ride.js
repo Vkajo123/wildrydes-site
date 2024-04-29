@@ -38,6 +38,9 @@ function completeRequest(result, pickupLocation) {
     pronoun = unicorn.Gender === 'Male' ? 'his' : 'her';
     displayUpdate(unicorn.Name + ', your ' + unicorn.Color + ' unicorn, is on ' + pronoun + ' way.', unicorn.Color);
 
+    // Update unicorn marker position to the new pickup location
+    WildRydes.unicorn.setLatLng([pickupLocation.latitude, pickupLocation.longitude]);
+
     // Animate unicorn's arrival
     animateArrival(function animateCallback() {
         displayUpdate(unicorn.Name + ' has arrived. Giddy up!', unicorn.Color);
@@ -47,6 +50,7 @@ function completeRequest(result, pickupLocation) {
         $('#request').text('Set Pickup');
     });
 }
+
 
 // Register click handler for #request button
 $(function onDocReady() {
