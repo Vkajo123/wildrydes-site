@@ -17,8 +17,6 @@ let map;
         window.location.href = '/signin.html';
     });
 
-     var firstUnicornPosition;
-
     //  requestUnicorn
     //      make the POST request to the server
     function requestUnicorn(pickupLocation) {
@@ -59,9 +57,6 @@ let map;
         //  get the local weather, find nearby restaurants, movies
         // getWeather(pickupLocation, unicorn)
 
-        var secondUnicornPosition = [pickupLocation.latitude, pickupLocation.longitude]; // Position of the second unicorn
-        drawLineBetweenUnicorns(firstUnicornPosition, secondUnicornPosition);
-
         animateArrival(function animateCallback() {
             displayUpdate(unicorn.Name + ' has arrived. Giddy up!', unicorn.Color);
             WildRydes.map.unsetLocation();
@@ -70,9 +65,6 @@ let map;
             $('#request').text('Set Pickup');
         });
     }
-
-    function drawLineBetweenUnicorns(firstPosition, secondPosition) {
-        var line = L.polyline([firstPosition, secondPosition], {color: 'blue'}).addTo(map);
 
     // Register click handler for #request button
     $(function onDocReady() {
@@ -116,7 +108,6 @@ let map;
                 shadowAnchor: [22, 24]
             });
             WildRydes.unicorn = L.marker([loc.coords.latitude, loc.coords.longitude], {icon: myIcon}).addTo(map);
-            firstUnicornPosition = [loc.coords.latitude, loc.coords.longitude];
             // WildRydes.marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
             // var popup = L.popup();
