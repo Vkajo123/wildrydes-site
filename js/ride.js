@@ -63,6 +63,13 @@ $(function onDocReady() {
         }
     });
 
+    function handleRequestClick(event) {
+    var pickupLocation = WildRydes.map.selectedPoint;
+
+    event.preventDefault();
+    requestUnicorn(pickupLocation);
+}
+
     if (!_config.api.invokeUrl) {
         $('#noApiMessage').show();
     }
