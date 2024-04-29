@@ -49,23 +49,24 @@ function requestUnicorn(pickupLocation, selectedColor) {
         var unicorn;
         var pronoun;
 
-        console.log('Response received from API: ', result);
-        unicorn = result.Unicorn;
-        pronoun = unicorn.Gender === 'Male' ? 'his' : 'her';
-        displayUpdate(unicorn.Name + ', your ' + unicorn.Color + ' unicorn, is on ' + pronoun + ' way.', unicorn.Color);
+    console.log('Response received from API: ', result);
+    unicorn = result.Unicorn;
+    pronoun = unicorn.Gender === 'Male' ? 'his' : 'her';
+    displayUpdate(unicorn.Name + ', your ' + unicorn.Color + ' unicorn, is on ' + pronoun + ' way.', unicorn.Color); // Updated displayUpdate function call
 
-        console.log(pickupLocation);
-        //  get the local weather, find nearby restaurants, movies
-        // getWeather(pickupLocation, unicorn)
+    console.log(pickupLocation);
+    // get the local weather, find nearby restaurants, movies
+    // getWeather(pickupLocation, unicorn)
 
-        animateArrival(function animateCallback() {
-            displayUpdate(unicorn.Name + ' has arrived. Giddy up!', unicorn.Color);
-            WildRydes.map.unsetLocation();
+    animateArrival(function animateCallback() {
+        displayUpdate(unicorn.Name + ' has arrived. Giddy up!', unicorn.Color); // Updated displayUpdate function call
+        WildRydes.map.unsetLocation();
 
-            $('#request').prop('disabled', 'disabled');
-            $('#request').text('Set Pickup');
-        });
-    }
+        $('#request').prop('disabled', 'disabled');
+        $('#request').text('Set Pickup');
+    });
+}
+
 
     // Register click handler for #request button
     $(function onDocReady() {
