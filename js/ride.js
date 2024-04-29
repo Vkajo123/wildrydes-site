@@ -51,7 +51,6 @@ function completeRequest(result, pickupLocation) {
     });
 }
 
-
 // Register click handler for #request button
 $(function onDocReady() {
     $('#request').click(handleRequestClick);
@@ -62,13 +61,6 @@ $(function onDocReady() {
             $('.authToken').text(token);
         }
     });
-
-    function handleRequestClick(event) {
-    var pickupLocation = WildRydes.map.selectedPoint;
-
-    event.preventDefault();
-    requestUnicorn(pickupLocation);
-}
 
     if (!_config.api.invokeUrl) {
         $('#noApiMessage').show();
@@ -93,13 +85,13 @@ $(function onDocReady() {
         WildRydes.marker = L.marker([loc.coords.latitude, loc.coords.longitude]).addTo(map);
 
         var myIcon = L.icon({
-    iconUrl: 'images/unicorn-icon.png',
-    iconSize: [25, 25],
-    iconAnchor: [22, 24],
-    shadowSize: [25, 25],
-    shadowAnchor: [22, 24]
-});
-WildRydes.unicorn = L.marker([loc.coords.latitude, loc.coords.longitude], { icon: myIcon }).addTo(map);
+            iconUrl: 'images/unicorn-icon.png',
+            iconSize: [25, 25],
+            iconAnchor: [22, 24],
+            shadowSize: [25, 25],
+            shadowAnchor: [22, 24]
+        });
+        WildRydes.unicorn = L.marker([loc.coords.latitude, loc.coords.longitude], { icon: myIcon }).addTo(map);
 
         // Add event listener for map clicks
         map.on('click', onMapClick);
@@ -167,3 +159,4 @@ function addMarkersForPointsOfInterest(pointsOfInterest) {
             .bindPopup(point.name);
     });
 }
+
