@@ -32,7 +32,7 @@ const fleet = [
 	{
 		Name: 'Victor5',
 		Color: 'Yellow',
-		Gender: 'Female',
+		Gender: 'Male',
 	},
 ];
 
