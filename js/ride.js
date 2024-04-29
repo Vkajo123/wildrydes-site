@@ -4,6 +4,51 @@ var WildRydes = window.WildRydes || {};
 WildRydes.map = WildRydes.map || {};
 let map;
 
+(function esriMapScopeWrapper($) {
+    var wrMap = WildRydes.map;
+
+    // Put the provided animate function here
+    wrMap.animate = function animate(origin, dest, callback) {
+        let tick = 0;
+        let id = null;
+        const unicorn = WildRydes.unicorn;
+        const map = WildRydes.map.map;
+
+        let latlng = unicorn.getLatLng();
+        let latInc = (dest.latitude - latlng.lat) / 100;
+        let lngInc = (dest.longitude - latlng.lng) / 100;
+
+        // Clear any existing polyline
+        if (WildRydes.polyline) {
+            WildRydes.polyline.remove();
+        }
+
+        // Create an array to store the coordinates of the polyline
+        const coordinates = [latlng];
+
+        clearInterval(id);
+        id = setInterval(frame, 5);
+
+        function frame() {
+            if (tick === 100) {
+                clearInterval(id);
+                // Draw polyline
+                WildRydes.polyline = L.polyline(coordinates, { color: 'red' }).addTo(map);
+                callback();
+            } else {
+                tick++;
+                latlng = { lat: latlng.lat + latInc, lng: latlng.lng + lngInc };
+                unicorn.setLatLng(latlng);
+                coordinates.push(latlng); // Add new coordinate to the array
+            }
+        }
+    }
+
+    wrMap.unsetLocation = function unsetLocation() {
+        if (WildRydes.marker)
+            WildRydes.marker.remove();
+    };
+    
 (function rideScopeWrapper($) {
     var authToken;
     WildRydes.authToken.then(function setAuthToken(token) {
