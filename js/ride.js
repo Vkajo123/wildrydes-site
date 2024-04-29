@@ -81,6 +81,15 @@ $(function onDocReady() {
         // Add marker for user's location
         WildRydes.marker = L.marker([loc.coords.latitude, loc.coords.longitude]).addTo(map);
 
+        var myIcon = L.icon({
+    iconUrl: 'images/unicorn-icon.png',
+    iconSize: [25, 25],
+    iconAnchor: [22, 24],
+    shadowSize: [25, 25],
+    shadowAnchor: [22, 24]
+});
+WildRydes.unicorn = L.marker([loc.coords.latitude, loc.coords.longitude], { icon: myIcon }).addTo(map);
+
         // Add event listener for map clicks
         map.on('click', onMapClick);
 
