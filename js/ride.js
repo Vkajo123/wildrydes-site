@@ -19,28 +19,29 @@ let map;
 
     //  requestUnicorn
     //      make the POST request to the server
-    function requestUnicorn(pickupLocation) {
-        $.ajax({
-            method: 'POST',
-            url: _config.api.invokeUrl + '/ride',
-            headers: {
-                Authorization: authToken
+function requestUnicorn(pickupLocation, selectedColor) {
+    $.ajax({
+        method: 'POST',
+        url: _config.api.invokeUrl + '/ride',
+        headers: {
+            Authorization: authToken
+        },
+        data: JSON.stringify({
+            PickupLocation: {
+                Latitude: pickupLocation.latitude,
+                Longitude: pickupLocation.longitude
             },
-            data: JSON.stringify({
-                PickupLocation: {
-                    Latitude: pickupLocation.latitude,
-                    Longitude: pickupLocation.longitude
-                }
-            }),
-            contentType: 'application/json',
-            success: result => completeRequest(result, pickupLocation),
-            error: function ajaxError(jqXHR, textStatus, errorThrown) {
-                console.error('Error requesting ride: ', textStatus, ', Details: ', errorThrown);
-                console.error('Response: ', jqXHR.responseText);
-                alert('An error occurred when requesting your unicorn:\n' + jqXHR.responseText);
-            }
-        });
-    }
+            UnicornColor: selectedColor // Include selected color in the request
+        }),
+        contentType: 'application/json',
+        success: result => completeRequest(result, pickupLocation),
+        error: function ajaxError(jqXHR, textStatus, errorThrown) {
+            console.error('Error requesting ride: ', textStatus, ', Details: ', errorThrown);
+            console.error('Response: ', jqXHR.responseText);
+            alert('An error occurred when requesting your unicorn:\n' + jqXHR.responseText);
+        }
+    });
+}
 
     //  completeRequest
     //      a Unicorn has been dispatched to your location
@@ -139,11 +140,13 @@ let map;
     //  handleRequestClick
     //      get current request location and POST request to server
     function handleRequestClick(event) {
-        var pickupLocation =  WildRydes.map.selectedPoint;
+    var pickupLocation =  WildRydes.map.selectedPoint;
+    var selectedColor = $('#unicornColor').val(); // Get selected color from dropdown
 
-        event.preventDefault();
-        requestUnicorn(pickupLocation);
+    event.preventDefault();
+    requestUnicorn(pickupLocation, selectedColor); // Pass selected color to requestUnicorn
     }
+
 
     //  animateArrival
     //      animate the Unicorn's arrival to the user's pickup location
