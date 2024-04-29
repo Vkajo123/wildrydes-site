@@ -4,6 +4,19 @@ var WildRydes = window.WildRydes || {};
 WildRydes.map = WildRydes.map || {};
 let map;
 
+(function rideScopeWrapper($) {
+    var authToken;
+    WildRydes.authToken.then(function setAuthToken(token) {
+        if (token) {
+            authToken = token;
+        } else {
+            window.location.href = '/signin.html';
+        }
+    }).catch(function handleTokenError(error) {
+        alert(error);
+        window.location.href = '/signin.html';
+    });
+
     //  requestUnicorn
     //      make the POST request to the server
     function requestUnicorn(pickupLocation) {
@@ -153,6 +166,7 @@ let map;
         WildRydes.map.animate(origin, dest, callback);
     }
 
+
 }(jQuery));
 
 //  these functions below here are my utility functions
@@ -164,3 +178,4 @@ let map;
 function displayUpdate(text, color='green') {
     $('#updates').prepend($(`<li style="background-color:${color}">${text}</li>`));
 }
+
